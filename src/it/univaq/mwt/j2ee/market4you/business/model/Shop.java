@@ -10,10 +10,10 @@ public class Shop {
 	private String postcode;
 	private String telephone;
 	private String city;
-	private byte rating;
+	private int rating;
 	
 	public Shop(User user, String name, String country, String address,
-			String postcode, String telephone, String city, byte rating) {
+			String postcode, String telephone, String city, int rating) {
 		super();
 		this.user = user;
 		this.name = name;
@@ -30,7 +30,7 @@ public class Shop {
 	}
 	public Shop(Integer id, User user, String name, String country,
 			String address, String postcode, String telephone, String city,
-			byte rating) {
+			int rating) {
 		this(user, name, country, address, postcode, telephone, city, rating);
 		this.id=id;
 	}
@@ -99,11 +99,11 @@ public class Shop {
 		this.city = city;
 	}
 
-	public byte getRating() {
+	public int getRating() {
 		return rating;
 	}
 
-	public void setRating(byte rating) {
+	public void setRating(int rating) {
 		this.rating = rating;
 	}
 

@@ -1,7 +1,6 @@
 package it.univaq.mwt.j2ee.market4you.business.implementation;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,9 +12,7 @@ import javax.sql.DataSource;
 
 import it.univaq.mwt.j2ee.market4you.business.BusinessException;
 import it.univaq.mwt.j2ee.market4you.business.NewsService;
-import it.univaq.mwt.j2ee.market4you.business.model.Category;
 import it.univaq.mwt.j2ee.market4you.business.model.News;
-import it.univaq.mwt.j2ee.market4you.business.model.Product;
 import it.univaq.mwt.j2ee.market4you.business.model.Shop;
 
 public class JDBCNewsService implements NewsService {
@@ -167,21 +164,20 @@ public class JDBCNewsService implements NewsService {
 		return news;
 	}
 	@Override
-	public List<News> findAllNewsByShopPK(Integer id) throws BusinessException {
+	public List<News> findAllNewsByShop(Shop shop) throws BusinessException {
 		List<News> results=new ArrayList<News>();
 		Connection connection=null;
 		Statement statement=null;
 		ResultSet resultSet=null;
 		try {
 			connection=dataSource.getConnection();
-			String sql= "SELECT * FROM news WHERE shop_id='"+id+"'";
+			String sql= "SELECT * FROM news WHERE shop_id='"+shop.getId()+"'";
 			statement=connection.createStatement();
 			resultSet=statement.executeQuery(sql);
 			while (resultSet.next()) {
 				Integer newsId=resultSet.getInt("news_id");
 				String title=resultSet.getString("title");
 				String body=resultSet.getString("body");
-				Shop shop=new Shop(id);
 				News news=new News(newsId, title, body, shop);
 				results.add(news);
 			}

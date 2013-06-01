@@ -10,10 +10,10 @@ public class Purchased {
 	private Review review;
 	private Date orderDate;
 	private double price;
-	private byte score;
+	private int score;
 	
 	public Purchased(Product product, User buyer, Review review,
-			Date orderDate, double price, byte score) {
+			Date orderDate, double price, int score) {
 		super();
 		this.product = product;
 		this.buyer = buyer;
@@ -24,7 +24,7 @@ public class Purchased {
 	}
 
 	public Purchased(Integer id, Product product, User buyer, Review review,
-			Date orderDate, double price, byte score) {
+			Date orderDate, double price, int score) {
 		this(product, buyer, review, orderDate, price, score);
 		this.id = id;
 		
@@ -78,11 +78,11 @@ public class Purchased {
 		this.price = price;
 	}
 
-	public byte getScore() {
+	public int getScore() {
 		return score;
 	}
 
-	public void setScore(byte score) {
+	public void setScore(int score) {
 		this.score = score;
 	}
 	

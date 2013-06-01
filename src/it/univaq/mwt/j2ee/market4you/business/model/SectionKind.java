@@ -2,23 +2,27 @@ package it.univaq.mwt.j2ee.market4you.business.model;
 
 public class SectionKind {
 	
-	private Byte id;
+	private Integer id;
 	private String name;
 	
 	public SectionKind(String name) {
 		this.name = name;
 	}
 	
-	public SectionKind(Byte id, String name) {
+	public SectionKind(Integer id, String name) {
 		this(name);
 		this.id=id;
 	}
+	
+	public SectionKind(Integer id) {
+		this.id=id;
+	}
 
-	public Byte getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Byte id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -29,6 +33,8 @@ public class SectionKind {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	
 	
 	
 	

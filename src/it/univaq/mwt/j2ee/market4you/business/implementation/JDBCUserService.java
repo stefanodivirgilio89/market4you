@@ -1,7 +1,6 @@
 package it.univaq.mwt.j2ee.market4you.business.implementation;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;

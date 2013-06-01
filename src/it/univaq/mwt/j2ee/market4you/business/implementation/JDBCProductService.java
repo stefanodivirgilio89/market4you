@@ -17,6 +17,7 @@ import it.univaq.mwt.j2ee.market4you.business.model.Category;
 import it.univaq.mwt.j2ee.market4you.business.model.Product;
 import it.univaq.mwt.j2ee.market4you.business.model.Shop;
 
+// LE DATE BISOGNA VEDERE COME IMPLEMENTARLE
 public class JDBCProductService implements ProductService {
 
 	private DataSource dataSource;
@@ -69,14 +70,14 @@ public class JDBCProductService implements ProductService {
 	}
 
 	@Override
-	public List<Product> findAllProductsByShopPK(Integer id) throws BusinessException {
+	public List<Product> findAllProductsByShop(Shop shop) throws BusinessException {
 		List<Product> products=new ArrayList<Product>();
 		Connection connection=null;
 		Statement statement=null;
 		ResultSet resultSet=null;
 		try {
 			connection=dataSource.getConnection();
-			String sql= "SELECT * FROM products WHERE shop_id='"+id+"'";
+			String sql= "SELECT * FROM products WHERE shop_id='"+shop.getId()+"'";
 			statement=connection.createStatement();
 			resultSet=statement.executeQuery(sql);
 			while (resultSet.next()) {
@@ -89,7 +90,6 @@ public class JDBCProductService implements ProductService {
 			    Date updatedOn=resultSet.getDate("update_on");
 				int visitedCount=resultSet.getInt("visited_count");
 				String imageURI=resultSet.getString("image_uri");
-				Shop shop=new Shop(id);
 				Category category=new Category(resultSet.getInt("category_id"));
 				Product product=new Product(productId, shop, category, name, price, description, sold, publishedOn, updatedOn, visitedCount, imageURI);
 				products.add(product);
@@ -246,6 +246,113 @@ public class JDBCProductService implements ProductService {
 			}
 		}
 		
+	}
+
+	@Override
+	public List<Product> findAllProductsByCategory(Category category)
+			throws BusinessException {
+		
+		List<Product> products=new ArrayList<Product>();
+		Connection connection=null;
+		Statement statement=null;
+		ResultSet resultSet=null;
+		try {
+			connection=dataSource.getConnection();
+			String sql= "SELECT * FROM products WHERE category_id='"+category.getId()+"'";
+			statement=connection.createStatement();
+			resultSet=statement.executeQuery(sql);
+			while (resultSet.next()) {
+				Integer productId= resultSet.getInt("product_id");
+				String name=resultSet.getString("name");
+				double price=resultSet.getDouble("price");
+				String description=resultSet.getString("description");
+				boolean sold=(resultSet.getString("sold").equals("true"))?true:false;
+		        Date publishedOn=resultSet.getDate("published_on");
+			    Date updatedOn=resultSet.getDate("update_on");
+				int visitedCount=resultSet.getInt("visited_count");
+				String imageURI=resultSet.getString("image_uri");
+	            Shop shop=new Shop(resultSet.getInt("shop_id"));
+				Product product=new Product(productId, shop, category, name, price, description, sold, publishedOn, updatedOn, visitedCount, imageURI);
+				products.add(product);
+			}
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new BusinessException();
+		} finally {
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+				}
+			}
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		return products;
+	}
+
+	@Override
+	public List<Product> findAllProductsByShopAndByCategory(Shop shop,
+			Category category) throws BusinessException {
+		
+		List<Product> products=new ArrayList<Product>();
+		Connection connection=null;
+		Statement statement=null;
+		ResultSet resultSet=null;
+		try {
+			connection=dataSource.getConnection();
+			String sql= "SELECT * FROM products WHERE category_id='"+category.getId()+"' AND shop_id='"+shop.getId()+"'";
+			statement=connection.createStatement();
+			resultSet=statement.executeQuery(sql);
+			while (resultSet.next()) {
+				Integer productId= resultSet.getInt("product_id");
+				String name=resultSet.getString("name");
+				double price=resultSet.getDouble("price");
+				String description=resultSet.getString("description");
+				boolean sold=(resultSet.getString("sold").equals("true"))?true:false;
+		        Date publishedOn=resultSet.getDate("published_on");
+			    Date updatedOn=resultSet.getDate("update_on");
+				int visitedCount=resultSet.getInt("visited_count");
+				String imageURI=resultSet.getString("image_uri");
+				Product product=new Product(productId, shop, category, name, price, description, sold, publishedOn, updatedOn, visitedCount, imageURI);
+				products.add(product);
+			}
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new BusinessException();
+		} finally {
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+				}
+			}
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+				}
+			}
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		return products;
 	}
 	
 

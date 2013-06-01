@@ -18,6 +18,10 @@ public class Review {
         this(body, dateAdded);
 		this.id = id;
 	}
+	
+	public Review(Integer id) {
+		this.id=id;
+	}
 
 	public Integer getId() {
 		return id;

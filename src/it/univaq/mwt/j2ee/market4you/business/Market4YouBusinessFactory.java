@@ -21,4 +21,10 @@ public abstract class Market4YouBusinessFactory {
 	
 	public abstract ReviewService getReviewService();
 	
+	public abstract SectionService getSectionService();
+	
+	public abstract ShopService getShopService();
+	
+	public abstract PurchasedService getPurchasedService();
+	
 }
